@@ -13,9 +13,12 @@ Building this project
 ---------------------
 At a minimum a recent version of cmake is required >= 2.6. 
 
-> mkdir build
-> cd build
-> cmake ..
-> make
+From within the root directory of this project execute the following:
 
+|   > mkdir build
+|   > cd build
+|   > cmake ..
+|   > make
+
+   
 
