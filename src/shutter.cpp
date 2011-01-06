@@ -1,4 +1,5 @@
 #include <WProgram.h>
+#include <SimpleTimer.h>
 
 void loop() {
     Serial.println("LED on");
@@ -10,18 +11,11 @@ void loop() {
     delay(3000);              // Wait for three seconds
 }
 
-int main(void)
+void setup()
 {
-    // Mandatory init
-    init();
-
-    Serial.begin(115200);
+	Serial.begin(115200);
 
     // Pin 13 has an LED connected on most Arduino boards
     pinMode(13, OUTPUT);
-
-    while (true)
-        loop();
-
-    return 0;
 }
+

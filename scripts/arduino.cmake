@@ -16,8 +16,13 @@ set(TUNNING_FLAGS "-funsigned-char -funsigned-bitfields -fpack-struct -fshort-en
 set(CMAKE_CXX_FLAGS "-mmcu=${ARDUINO_BOARD} -DF_CPU=${ARDUINO_FCPU} -Os")
 set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} ${TUNNING_FLAGS} -Wall -Wstrict-prototypes -std=gnu99")
 
-set(ARDUINO_CORE_DIR "/usr/share/arduino/hardware/arduino/cores/arduino/")
-include_directories(${ARDUINO_CORE_DIR})
+set(ARDUINO_CORE_DIR "/home/chris/bin/arduino-0021/hardware/arduino/cores/arduino/")
+set(ARDUINO_LIBRARIES_DIR "/home/chris/bin/arduino-0021/libraries")
+
+include_directories(
+	${ARDUINO_CORE_DIR}
+	${ARDUINO_LIBRARIES_DIR} 
+)
 
 set(ARDUINO_SOURCE_FILES
     ${CMAKE_SOURCE_DIR}/scripts/ldd_hack.cpp
@@ -32,6 +37,7 @@ set(ARDUINO_SOURCE_FILES
 	${ARDUINO_CORE_DIR}/wiring_shift.c
 	${ARDUINO_CORE_DIR}/WMath.cpp
 	${ARDUINO_CORE_DIR}/WString.cpp
+	${ARDUINO_CORE_DIR}/main.cpp
 )
 
 set(PORT $ENV{ARDUINO_PORT})
