@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * RotaryEncoder.h
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,27 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
 
-class Command
+#ifndef ROTARYENCODER_H_
+#define ROTARYENCODER_H_
+
+#include "Command.hpp"
+#include <stdint.h>
+
+class RotaryEncoder :public Command
 {
-
 public:
-	virtual void execute() = 0;
+	RotaryEncoder(uint8_t pinA, uint8_t pinB );
+	int16_t getCounter();
+	void resetCounter();
+	void execute();
 
+protected:
+	RotaryEncoder();
+	int16_t m_counter;
+	int16_t m_encLast;
+	uint8_t m_pinA;
+	uint8_t m_pinB;
 };
 
-#endif /* COMMAND_2011_01_08_HPP_ */
+#endif /* ROTARYENCODER_H_ */

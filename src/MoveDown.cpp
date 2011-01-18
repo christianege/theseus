@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * MoveDown.cpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,16 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
+#include "MoveDown.hpp"
 
-class Command
+MoveDown::MoveDown(RollerShutterManager &mgr)
+:m_mgr(mgr)
 {
+	;
+}
 
-public:
-	virtual void execute() = 0;
-
-};
-
-#endif /* COMMAND_2011_01_08_HPP_ */
+void MoveDown::execute()
+{
+	Serial.println("move down");
+	m_mgr.moveDown();
+}

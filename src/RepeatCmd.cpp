@@ -1,9 +1,7 @@
 /*
- * Command.hpp
- *
- *  Created on: 13.01.2011
- *      Author: Christian Ege <chege (at) cybertux.org>
- *      Copyright (c) 2011 Markdorf Germany
+ *  RepeatCmd - A repeated Command
+ *  Author: Christian Ege <chege(at)cybertux.org>
+ *  Copyright (c) 2011 Markdorf Germany
  *
  * This Class is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -23,15 +21,32 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
+#include "RepeatCmd.hpp"
+#include <WProgram.h>
 
-class Command
+RepeatCmd::RepeatCmd(RotaryEncoder &enc)
+:high(false),
+ m_enc(enc)
 {
+	digitalWrite(13, LOW);
+}
 
-public:
-	virtual void execute() = 0;
+void RepeatCmd::execute()
+{
+	if(!high)
+	{
+		//Serial.println("LED an");
+		digitalWrite(13, HIGH);   // Set the LED on
+		high = true;
+	}
+	else
+	{
+	    //Serial.println("LED aus");
+	    digitalWrite(13, LOW);    // Set the LED off
+	    high=false;
+	}
+	//Serial.print("Rotary Encoder: ");
+	//Serial.println(m_enc.getCounter());
+}
 
-};
 
-#endif /* COMMAND_2011_01_08_HPP_ */

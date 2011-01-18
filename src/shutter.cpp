@@ -1,36 +1,107 @@
 /*  
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *  shutter.cpp - A arduino roller shutter controller
+ *  Author: Christian Ege <chege(at)cybertux.org>
+ *  Copyright (c) 2011 Markdorf Germany
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This Class is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU Lesser
+ * General Public License as published by the Free Software
+ * Foundation; either version 2.1 of the License, or (at
+ * your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licens
+ * This library is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser
+ * General Public License along with this library; if not,
+ * write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#include "SimpleTimer.h"
+#include "RepeatCmd.hpp"
+#include "RollerShutter.h"
+#include "RollerShutterTimes.hpp"
+#include "RollerShutterManager.hpp"
+#include "RotaryEncoder.h"
+#include "Debouncer.hpp"
+#include "MoveDown.hpp"
+#include "MoveUp.hpp"
+#include "MoveStop.hpp"
+
 #include <WProgram.h>
-#include <SimpleTimer.h>
 
-void loop() {
-    Serial.println("LED on");
-    digitalWrite(13, HIGH);   // Set the LED on
-    delay(3000);              // Wait for three seconds
+// There must be one global SimpleTimer object.
+// More SimpleTimer objects can be created and run,
+// although there is little point in doing so.
+SimpleTimer timer;
+RollerShutter rollerShutter(11,12);
 
-    Serial.println("LED off");
-    digitalWrite(13, LOW);    // Set the LED off
-    delay(3000);              // Wait for three seconds
+RollerShutterManager mgr(timer,rollerShutter);
+MoveDown moveDown(mgr);
+MoveUp moveUp(mgr);
+MoveStop MoveStop(mgr);
+
+RotaryEncoder rotaryEncoder(11,12);
+RepeatCmd repeatCommand(rotaryEncoder);
+Debouncer debUp(moveUp,8);
+Debouncer debStop(moveDown,9);
+Debouncer debDown(MoveStop,10);
+
+static const uint8_t line_count = 10;
+const shutter::LineSegment lines[line_count] = {
+		{true,    0,  19, 0.000,  228.000 },
+		{true,   20, 149,-1.753 , 261.600 },
+		{true,  150, 184, 0.000,    0.000 },
+		{true,  185, 354, 1.349, -250.100 },
+		{true,  354, 364, 0.000,  228.000 },
+		{false,   0, 156, 1.436,    9.668 },
+		{false, 157, 195, 0.000,  234.000 },
+		{false, 196, 327,-1.778,  582.300 },
+		{false, 328, 357, 0.000,    0.000 },
+		{false, 358, 364, 1.436, -514.000 },
+};
+
+shutter::RollerShutterTimes shutter_times( lines,
+								  line_count,
+								  263,
+								  990,
+								  30,
+								  30
+		);
+
+
+
+void loop()
+{
+	timer.run();
 }
 
 void setup()
 {
-	Serial.begin(115200);
+	Serial.begin(9600);
+
+	pinMode (11,INPUT);
+	digitalWrite(11, HIGH);       // turn on pullup resistor
+	pinMode (12,INPUT);
+	digitalWrite(12, HIGH);       // turn on pullup resistor
+
+	pinMode(8, INPUT);    // Set the switch pin as input
+	pinMode(9, INPUT);    // Set the switch pin as input
+	pinMode(10, INPUT);    // Set the switch pin as input
+
 
     // Pin 13 has an LED connected on most Arduino boards
     pinMode(13, OUTPUT);
+
+    timer.setInterval(5000, &repeatCommand);
+    timer.setInterval(1, &rotaryEncoder);
+    timer.setInterval(10,&debDown);
+    timer.setInterval(10,&debUp);
+    timer.setInterval(10,&debStop);
+    mgr.moveUp();
 }
 

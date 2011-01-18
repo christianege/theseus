@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * Debouncer.cpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,50 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
+#include "Debouncer.hpp"
+#include "WProgram.h"
 
-class Command
+Debouncer::Debouncer(Command &command, uint8_t port,uint8_t threshold)
+:m_command(command),
+ m_port(port),
+ m_state(LOW),
+ m_counter(0),
+ m_threshold(threshold)
 {
+	// TODO Auto-generated constructor stub
 
-public:
-	virtual void execute() = 0;
+}
 
-};
-
-#endif /* COMMAND_2011_01_08_HPP_ */
+void Debouncer::execute()
+{
+	uint8_t val = digitalRead(m_port);
+	if(m_state != val)
+	{
+		if(LOW == val)
+		{
+			m_counter++;
+		}
+		else
+		{
+			m_counter = 0;
+		}
+	}
+	else
+	{
+		if(LOW == val)
+		{
+			m_counter++;
+		}
+	}
+	if(m_threshold == m_counter)
+	{
+		m_command.execute();
+		//Serial.println("Button pressed");
+		m_counter = m_threshold + 1;
+	}
+	else if(m_threshold < m_counter)
+	{
+		m_counter = m_threshold + 1;
+	}
+	m_state = val;
+}

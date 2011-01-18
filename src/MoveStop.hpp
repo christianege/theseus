@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * MoveStop.hpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,23 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
+#ifndef MOVESTOP_HPP_
+#define MOVESTOP_HPP_
 
-class Command
+#include "Command.hpp"
+#include "RollerShutterManager.hpp"
+
+class MoveStop: public Command
 {
 
 public:
-	virtual void execute() = 0;
+	MoveStop(RollerShutterManager &mgr);
+	void execute();
+
+private:
+	MoveStop();
+	RollerShutterManager &m_mgr;
 
 };
 
-#endif /* COMMAND_2011_01_08_HPP_ */
+#endif /* MOVESTOP_HPP_ */

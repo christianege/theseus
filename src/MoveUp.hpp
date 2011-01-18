@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * MoveUp.hpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,21 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
+#ifndef MoveUp_HPP_
+#define MoveUp_HPP_
 
-class Command
+#include "Command.hpp"
+#include "RollerShutterManager.hpp"
+
+class MoveUp: public Command
 {
-
 public:
-	virtual void execute() = 0;
+	MoveUp(RollerShutterManager &mgr);
+	void execute();
 
+private:
+	MoveUp();
+	RollerShutterManager &m_mgr;
 };
 
-#endif /* COMMAND_2011_01_08_HPP_ */
+#endif /* MoveUp_HPP_ */

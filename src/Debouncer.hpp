@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * Debouncer.hpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,24 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
 
-class Command
-{
+#ifndef DEBOUNCER_HPP_
+#define DEBOUNCER_HPP_
 
+#include "Command.hpp"
+#include <stdint.h>
+
+class Debouncer :public Command {
 public:
-	virtual void execute() = 0;
+	Debouncer(Command &command,uint8_t port,uint8_t threshold = 3);
+	void execute();
 
+protected:
+	Command &m_command;
+	uint8_t m_port;
+	uint8_t m_state;
+	uint8_t m_counter;
+	const uint8_t m_threshold;
 };
 
-#endif /* COMMAND_2011_01_08_HPP_ */
+#endif /* DEBOUNCER_HPP_ */

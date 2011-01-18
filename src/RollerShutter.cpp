@@ -1,6 +1,5 @@
 /*
- * Command.hpp
- *
+ * RollerShutter.cpp
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
  *      Copyright (c) 2011 Markdorf Germany
@@ -23,15 +22,47 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
 
-class Command
+#include "RollerShutter.h"
+#include <WProgram.h>
+
+RollerShutter::RollerShutter(uint8_t pinPWR, uint8_t pinDIR)
+:m_pinPWR(pinPWR),
+ m_pinDIR(pinDIR)
 {
 
-public:
-	virtual void execute() = 0;
+}
 
-};
+void RollerShutter::direction(bool up)
+{	uint8_t state = LOW;
 
-#endif /* COMMAND_2011_01_08_HPP_ */
+	if(true == up)
+	{
+		/* set direction Pin low, this enables up direction */
+		state = LOW;
+		Serial.println(">move up!");
+	}
+	else
+	{
+		/* set direction Pin high, this enables down direction */
+		state =  HIGH;
+		Serial.println(">move down!");
+	}
+	digitalWrite(m_pinDIR, state);
+
+}
+
+void RollerShutter::stop()
+{
+	/* set direction and power low, this disables power and releases relays */
+	digitalWrite(m_pinDIR, LOW);
+	digitalWrite(m_pinPWR, LOW);
+	Serial.println(">stop!");
+}
+
+void RollerShutter::start()
+{
+	/* set power Pin high, this enables power */
+	digitalWrite(m_pinPWR, HIGH);
+	Serial.println(">start!");
+}

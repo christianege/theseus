@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * StopShutter.cpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,19 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
 
-class Command
+#include "StopShutter.hpp"
+#include "RollerShutterManager.hpp"
+
+
+StopShutter::StopShutter(RollerShutterManager &mgr)
+:m_mgr(mgr)
 {
 
-public:
-	virtual void execute() = 0;
+}
 
-};
+void StopShutter::execute()
+{
+	m_mgr.final();
+}
 
-#endif /* COMMAND_2011_01_08_HPP_ */

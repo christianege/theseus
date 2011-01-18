@@ -1,0 +1,111 @@
+<?xml version='1.0'?>
+<!DOCTYPE qfsmproject SYSTEM 'qfsm.dtd'>
+<qfsmproject version="0.52" author="Qfsm">
+  <machine nummooreout="0" transfontitalic="0" draw_it="1" statefontsize="8" transfont="Helvetica" statefontitalic="0" author="" description="" version="" name="FSM" arrowtype="1" numbits="3" statefontweight="50" statefont="Helvetica" numin="1" transfontsize="8" transfontweight="50" type="0" numout="0" initialstate="0">
+    <outputnames_moore></outputnames_moore>
+    <inputnames>i_0</inputnames>
+    <outputnames></outputnames>
+    <itransition ypos="205" endx="120" xpos="60" endy="205"/>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="205" code="0" xpos="160" linewidth="1">START_STATE</state>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="514" code="1" xpos="457" linewidth="1">OPEN_STATE</state>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="334" code="3" xpos="860" linewidth="1">CLOSED_STATE</state>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="334" code="4" xpos="609" linewidth="1">ALMOST_CLOSED</state>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="358" code="5" xpos="286" linewidth="1">ALMOST_OPEN</state>
+    <transition c1x="66,66666681481479" c2y="358" c1y="285" description="" straight="0" type="1" ypos="245" endx="246" xpos="160,0000002222222" endy="358" c2x="179,3333334074074">
+      <from>0</from>
+      <to>5</to>
+      <inputs default="0" any="0" invert="0">UP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="450,9178805263192" c2y="467,2950108703368" c1y="394,1542331882019" description="" straight="1" type="1" ypos="474,8879034369036" endx="488,5611148234403" xpos="465,3811635492349" endy="489,4257038533834" c2x="567,5379753315485">
+      <from>1</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">UP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="552,3550186361429" c2y="578,6875405886002" c1y="441,1479552730273" description="" straight="1" type="1" ypos="498,7700077898282" endx="495,1234310487087" xpos="493,9871239389886" endy="526,1080140846614" c2x="558,0718659795999">
+      <from>1</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">STOP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="426,437950436333" c2y="425,4381432754116" c1y="369,2273207961809" description="" straight="0" type="1" ypos="475,5390420943671" endx="575,7179882264862" xpos="446,0111548841049" endy="356,1880078490092" c2x="470,0723918893572">
+      <from>1</from>
+      <to>4</to>
+      <inputs default="0" any="0" invert="0">DOWN_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="747,6269972208025" c2y="214,0052838076279" c1y="291,901208492565" description="" straight="1" type="1" ypos="310,7504722512361" endx="850,0102682161432" xpos="827,4506611517306" endy="295,26751674774" c2x="861,1260932075406">
+      <from>3</from>
+      <to>3</to>
+      <inputs default="0" any="0" invert="0">FINAL_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="976,9183802036129" c2y="434,6258790775729" c1y="306,9797784878911" description="" straight="1" type="1" ypos="335,387057909579" endx="889,7317658498866" xpos="899,9759436455911" endy="360,758589264898" c2x="925,3791439211747">
+      <from>3</from>
+      <to>3</to>
+      <inputs default="0" any="0" invert="0">STOP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="861,292346583987" c2y="54,12992535250072" c1y="133,4748463995426" description="" straight="0" type="1" ypos="294,065146623041" endx="293,1554175279993" xpos="862,2819916215406" endy="318,6452035960037" c2x="414,3014216735401">
+      <from>3</from>
+      <to>5</to>
+      <inputs default="0" any="0" invert="0">UP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="881,3251097352085" c2y="394,4281948086622" c1y="452,0899644118048" description="" straight="1" type="1" ypos="373,8618303297952" endx="831,8326482297919" xpos="856,6781808058504" endy="362,4007093970089" c2x="756,3253489411883">
+      <from>3</from>
+      <to>3</to>
+      <inputs default="0" any="0" invert="0">DOWN_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="512,6233828103565" c2y="361,4429943890162" c1y="348,0323596363382" description="" straight="0" type="1" ypos="315,3296552176751" endx="322,667838588337" xpos="573,6246098861212" endy="342,0165831794429" c2x="410,6163990470693">
+      <from>4</from>
+      <to>5</to>
+      <inputs default="0" any="0" invert="0">UP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="542,8812154219564" c2y="237,6182792431281" c1y="233,8585683848974" description="" straight="1" type="1" ypos="296,0526680779794" endx="623,7022938635366" xpos="596,3508893593265" endy="296,799965656599" c2x="680,4882081461296">
+      <from>4</from>
+      <to>4</to>
+      <inputs default="0" any="0" invert="0">DOWN_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="676,8652085890164" c2y="431,6208777845662" c1y="432,966223850207" description="" straight="1" type="1" ypos="371,7196133433156" endx="594,952499970633" xpos="622,3128047094056" endy="371,452206115594" c2x="539,2134381089684">
+      <from>4</from>
+      <to>4</to>
+      <inputs default="0" any="0" invert="0">STOP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="689,3980999980622" c2y="301,2338083338178" c1y="293,7661916661822" description="" straight="0" type="1" ypos="334" endx="821,1942999941867" xpos="649" endy="343,7014250014533" c2x="761,9904999903113">
+      <from>4</from>
+      <to>3</to>
+      <inputs default="0" any="0" invert="0">FINAL_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="243,9504828877724" c2y="473,1045456417132" c1y="393,4933625308882" description="" straight="0" type="1" ypos="397,8821794200633" endx="428,7157287525381" xpos="289,0678599553895" endy="485,7157287525381" c2x="397,8331058201553">
+      <from>5</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">FINAL_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="403,7203407815651" c2y="460,6589786592274" c1y="334,7207954115231" description="" straight="1" type="1" ypos="360,660760420951" endx="314,8636071931114" xpos="325,9114063142644" endy="385,6928181989801" c2x="348,1380245956072">
+      <from>5</from>
+      <to>5</to>
+      <inputs default="0" any="0" invert="0">STOP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="363,1602415590801" c2y="239,1852122171784" c1y="262,1531911462009" description="" straight="0" type="1" ypos="335,8119921509908" endx="579,460580242875" xpos="319,2820117735138" endy="307,0292254391467" c2x="563,6694050142207">
+      <from>5</from>
+      <to>4</to>
+      <inputs default="0" any="0" invert="0">CLOSE_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="168,9628705412622" c2y="238,957149990183" c1y="331,4988617591875" description="" straight="1" type="1" ypos="339,3701426866951" endx="270,8595739764868" xpos="250,6032711047207" endy="320,97612257169" c2x="270,873868255889">
+      <from>5</from>
+      <to>5</to>
+      <inputs default="0" any="0" invert="0">UP_EVENT</inputs>
+      <outputs></outputs>
+    </transition>
+  </machine>
+</qfsmproject>

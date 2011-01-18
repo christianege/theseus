@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * MoveUp.cpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -22,16 +22,17 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
+#include "MoveUp.hpp"
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
 
-class Command
+MoveUp::MoveUp(RollerShutterManager &mgr)
+:m_mgr(mgr)
 {
 
-public:
-	virtual void execute() = 0;
+}
 
-};
-
-#endif /* COMMAND_2011_01_08_HPP_ */
+void MoveUp::execute()
+{
+	Serial.println("move up");
+	m_mgr.moveUp();
+}

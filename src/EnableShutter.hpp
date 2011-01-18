@@ -1,5 +1,5 @@
 /*
- * Command.hpp
+ * EnableShutter.hpp
  *
  *  Created on: 13.01.2011
  *      Author: Christian Ege <chege (at) cybertux.org>
@@ -23,15 +23,21 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef COMMAND_2011_01_08_HPP_
-#define COMMAND_2011_01_08_HPP_
+#ifndef STARTSHUTTER_H_
+#define STARTSHUTTER_H_
 
-class Command
+#include "Command.hpp"
+#include "RollerShutter.h"
+
+class EnableShutter: public Command
 {
 
 public:
-	virtual void execute() = 0;
+	EnableShutter(RollerShutter &shutter);
+	void execute();
 
+private:
+	RollerShutter &m_shutter;
 };
 
-#endif /* COMMAND_2011_01_08_HPP_ */
+#endif /* STARTSHUTTER_H_ */
