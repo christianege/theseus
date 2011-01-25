@@ -40,13 +40,13 @@ void RollerShutter::direction(bool up)
 	{
 		/* set direction Pin low, this enables up direction */
 		state = LOW;
-		Serial.println(">move up!");
+		Serial.println("> move up!");
 	}
 	else
 	{
 		/* set direction Pin high, this enables down direction */
 		state =  HIGH;
-		Serial.println(">move down!");
+		Serial.println("> move down!");
 	}
 	digitalWrite(m_pinDIR, state);
 
@@ -57,12 +57,12 @@ void RollerShutter::stop()
 	/* set direction and power low, this disables power and releases relays */
 	digitalWrite(m_pinDIR, LOW);
 	digitalWrite(m_pinPWR, LOW);
-	Serial.println(">stop!");
+	Serial.println("> stop!");
 }
 
 void RollerShutter::start()
 {
 	/* set power Pin high, this enables power */
 	digitalWrite(m_pinPWR, HIGH);
-	Serial.println(">start!");
+	Serial.println("> start!");
 }

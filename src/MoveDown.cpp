@@ -24,6 +24,7 @@
  */
 
 #include "MoveDown.hpp"
+#include "HardwareSerial.h"
 
 MoveDown::MoveDown(RollerShutterManager &mgr)
 :m_mgr(mgr)

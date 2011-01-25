@@ -26,7 +26,6 @@
 
 #include "RollerShutterTimes.hpp"
 
-namespace shutter {
 
 
 RollerShutterTimes::RollerShutterTimes(const LineSegment *lines,
@@ -50,11 +49,13 @@ RollerShutterTimes::RollerShutterTimes(const LineSegment *lines,
 void RollerShutterTimes::getUpOffset(const uint16_t day, uint16_t &offset )
 {
 	getOffset(true,day,offset);
+	offset += m_sunriseOffset;
 }
 
 void RollerShutterTimes::getDownOffset(const uint16_t day, uint16_t &offset )
 {
 	getOffset(false,day,offset);
+	offset += m_sunsetOffset;
 }
 
 void RollerShutterTimes::getOffset(const bool up, const  uint16_t day, uint16_t &offset)
@@ -77,10 +78,9 @@ void RollerShutterTimes::getOffset(const bool up, const  uint16_t day, uint16_t 
 				( mpe_lines[i].end >= day)
 		)
 		{
-			offset += (int)(float)day*mpe_lines[i].slope+mpe_lines[i].yIntercept;
+			offset += (int)((float)day*mpe_lines[i].slope+mpe_lines[i].yIntercept);
 			return;
 		}
 	}
 }
 
-} // End of namespace shutter

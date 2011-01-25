@@ -5,6 +5,14 @@
  * Author: mromani@ottotecnica.com
  * Copyright (c) 2010 OTTOTECNICA Italy
  *
+ * Modified to work with the command pattern instead of
+ * function pointer by Christian Ege chege (at) cybertux.org
+ * Copyright (c) 2011 Markdorf Germany
+ *
+ * Fixed the re enable of a particular Timer by resetting
+ * the start millis value.  by Christian Ege chege (at) cybertux.org
+ * Copyright (c) 2011 Markdorf Germany
+ *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
  * General Public License as published by the Free Software
@@ -24,14 +32,15 @@
  */
 
 #include "SimpleTimer.h"
+#include "wiring.h"
 
-
-SimpleTimer::SimpleTimer() {
+SimpleTimer::SimpleTimer()
+{
     long current_millis = millis();
 
     for (int i = 0; i < MAX_TIMERS; i++) {
         enabled[i] = false;
-        callbacks[i] = 0;
+        commands[i] = NULL;
         prev_millis[i] = current_millis;
     }
 
@@ -49,7 +58,7 @@ void SimpleTimer::run() {
     for (i = 0; i < MAX_TIMERS; i++) {
 
         // only process active timers
-        if (callbacks[i] && enabled[i]) {
+        if ((NULL != commands[i]) && enabled[i]) {
 
             // is it time to process this timer ?
             if (current_millis - prev_millis[i] >= delays[i]) {
@@ -59,11 +68,11 @@ void SimpleTimer::run() {
 
                 // "run forever" timers must always be executed
                 if (maxNumRuns[i] == RUN_FOREVER) {
-                    (*callbacks[i])();
+                    commands[i]->execute();
                 }
                 // other timers get executed the specified number of times
                 else if (numRuns[i] < maxNumRuns[i]) {
-                    (*callbacks[i])();
+                	commands[i]->execute();
                     numRuns[i]++;
 
                     // after the last run, delete the timer
@@ -78,30 +87,30 @@ void SimpleTimer::run() {
 }
 
 
-int SimpleTimer::setTimer(long d, timer_callback f, int n) {
+int SimpleTimer::setTimer(long d,  Command *cmd, int n) {
     if (numTimers >= MAX_TIMERS) {
         return -1;
     }
 
     delays[numTimers] = d;
-    callbacks[numTimers] = f;
+    commands[numTimers] = cmd;
     maxNumRuns[numTimers] = n;
     enabled[numTimers] = true;
     numRuns[numTimers] = 0;
-
+    prev_millis[numTimers] = millis();
     numTimers++;
 
     return (numTimers - 1);
 }
 
 
-int SimpleTimer::setInterval(long d, timer_callback f) {
-    return setTimer(d, f, RUN_FOREVER);
+int SimpleTimer::setInterval(long d, Command *cmd) {
+    return setTimer(d, cmd, RUN_FOREVER);
 }
 
 
-int SimpleTimer::setTimeout(long d, timer_callback f) {
-    return setTimer(d, f, RUN_ONCE);
+int SimpleTimer::setTimeout(long d, Command *cmd) {
+    return setTimer(d, cmd, RUN_ONCE);
 }
 
 
@@ -115,7 +124,7 @@ void SimpleTimer::deleteTimer(int numTimer) {
         return;
     }
 
-    callbacks[numTimer] = 0;
+    commands[numTimer] = NULL;
     enabled[numTimer] = false;
     delays[numTimer] = 0;
 
@@ -124,7 +133,7 @@ void SimpleTimer::deleteTimer(int numTimer) {
 }
 
 
-boolean SimpleTimer::isEnabled(int numTimer) {
+bool SimpleTimer::isEnabled(int numTimer) {
     if (numTimer >= MAX_TIMERS) {
         return false;
     }
@@ -139,6 +148,8 @@ void SimpleTimer::enable(int numTimer) {
     }
 
     enabled[numTimer] = true;
+    numRuns[numTimer] = 0;
+    prev_millis[numTimer] = millis();
 }
 
 

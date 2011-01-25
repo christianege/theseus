@@ -24,6 +24,7 @@
  */
 
 #include "MoveStop.hpp"
+#include "HardwareSerial.h"
 
 MoveStop::MoveStop(RollerShutterManager &mgr)
 :m_mgr(mgr)

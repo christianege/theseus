@@ -58,26 +58,22 @@ RollerShutterManager::RollerShutterManager(SimpleTimer &timer,
 void RollerShutterManager::moveDown()
 {
 	this->process(DOWN_EVENT);
-	Serial.println("down event");
 }
 
 void RollerShutterManager::moveUp()
 {
 	this->process(UP_EVENT);
-	Serial.println("up event");
 }
 
 void RollerShutterManager::stop()
 {
 	this->process(STOP_EVENT);
-	Serial.println("stop event");
 }
 
 
 void RollerShutterManager::final()
 {
 	this->process(FINAL_EVENT);
-	Serial.println("final event");
 }
 
 ShutterAction RollerShutterManager::stateEval(ShutterEvent e)
@@ -104,6 +100,12 @@ void RollerShutterManager::process(ShutterEvent e)
 		case FINAL_ACTION:
 			action_final();
 			break;
+		case STOP_UP_ACTION:
+			action_stop_move_up();
+			break;
+		case STOP_DOWN_ACTION:
+			action_move_up();
+			break;
 		case NIL_ACTION:
 		default:
 			action_nil();
@@ -118,9 +120,8 @@ void RollerShutterManager::action_nil()
 
 void RollerShutterManager::action_final()
 {
-	Serial.println("final");
+	Serial.println("-- stop final --");
 	m_shutter.stop();
-	Serial.println(millis());
 }
 
 void RollerShutterManager::action_stop()
@@ -129,7 +130,9 @@ void RollerShutterManager::action_stop()
 	if(-1 != m_finalTimerNum)
 	{
 		m_timer.disable(m_finalTimerNum);
+		m_finalTimerNum = -1;
 	}
+	Serial.println("-- stop move --");
 }
 
 void RollerShutterManager::action_stop_move_up()
@@ -161,8 +164,4 @@ void RollerShutterManager::startMove()
 	Serial.println("-- start move --");
 	m_timer.setTimeout(static_cast<long int>(m_timeOut),&m_enableCmd);
 	m_finalTimerNum = m_timer.setTimeout(static_cast<long int>(m_timeOut+m_inMotionTime),&m_finalCmd);
-	Serial.println(m_finalTimerNum);
-	Serial.println(millis());
-	Serial.print("delay: ");
-	Serial.println(static_cast<long int>(m_timeOut+m_inMotionTime));
 }

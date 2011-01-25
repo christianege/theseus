@@ -5,6 +5,10 @@
  * Author: mromani@ottotecnica.com
  * Copyright (c) 2010 OTTOTECNICA Italy
  *
+ * Modified to work with the command pattern instead of
+ * function pointer by Christian Ege chege (at) cybertux.org
+ * Copyright (c) 2011 Markdorf Germany
+ *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
  * General Public License as published by the Free Software
@@ -26,15 +30,15 @@
 #ifndef SIMPLETIMER_H
 #define SIMPLETIMER_H
 
-#include <WProgram.h>
+//#include <WProgram.h>
+#include "Command.hpp"
 
-typedef void (*timer_callback)(void);
 
 class SimpleTimer {
 
 public:
     // maximum number of timers
-    const static int MAX_TIMERS = 10;
+    const static int MAX_TIMERS = 20;
 
     // setTimer() constants
     const static int RUN_FOREVER = 0;
@@ -47,19 +51,19 @@ public:
     void run();
 
     // call function f every d milliseconds
-    int setInterval(long d, timer_callback f);
+    int setInterval(long d,  Command *cmd);
 
     // call function f once after d milliseconds
-    int setTimeout(long d, timer_callback f);
+    int setTimeout(long d,  Command *cmd);
 
     // call function f every d milliseconds for n times
-    int setTimer(long d, timer_callback f, int n);
+    int setTimer(long d,  Command *cmd, int n);
 
     // destroy the specified timer
     void deleteTimer(int numTimer);
 
     // returns true if the specified timer is enabled
-    boolean isEnabled(int numTimer);
+    bool isEnabled(int numTimer);
 
     // enables the specified timer
     void enable(int numTimer);
@@ -80,7 +84,7 @@ private:
     long prev_millis[MAX_TIMERS];
 
     // pointers to the callback functions
-    timer_callback callbacks[MAX_TIMERS];
+    Command* commands[MAX_TIMERS];
 
     // delay values
     long delays[MAX_TIMERS];
@@ -92,7 +96,7 @@ private:
     int numRuns[MAX_TIMERS];
 
     // which timers are enabled
-    boolean enabled[MAX_TIMERS];
+    bool enabled[MAX_TIMERS];
 
     // actual number of timers in use
     int numTimers;

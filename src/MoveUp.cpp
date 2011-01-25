@@ -23,7 +23,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include "MoveUp.hpp"
-
+#include "HardwareSerial.h"
 
 MoveUp::MoveUp(RollerShutterManager &mgr)
 :m_mgr(mgr)

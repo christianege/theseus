@@ -47,14 +47,22 @@ endif()
 
 find_program(AVROBJCOPY "avr-objcopy")
 find_program(AVRDUDE "avrdude")
+find_program(AVRSTRIP "avr-strip")
 
 # FIXME: Forcing target name to be "firmware"
 if(AVROBJCOPY AND AVRDUDE)
+    add_custom_target(strip)
+    add_dependencies(strip firmware)
+
+    add_custom_command(TARGET strip POST_BUILD
+	    COMMAND ${AVRSTRIP} ${CMAKE_CURRENT_BINARY_DIR}/firmware 
+    )
+
     add_custom_target(hex)
     add_dependencies(hex firmware)
 
     add_custom_command(TARGET hex POST_BUILD
-        COMMAND ${AVROBJCOPY} -O ihex -R .eeprom ${CMAKE_CURRENT_BINARY_DIR}/firmware firmware.hex
+	    COMMAND ${AVROBJCOPY} -O ihex -S -R .eeprom ${CMAKE_CURRENT_BINARY_DIR}/firmware firmware.hex
     )
 
     add_custom_target(flash)

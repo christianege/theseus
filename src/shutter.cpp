@@ -21,6 +21,8 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#include "DS1307.h"
+#include "ShutterClockTimer.hpp"
 #include "SimpleTimer.h"
 #include "RepeatCmd.hpp"
 #include "RollerShutter.h"
@@ -31,8 +33,9 @@
 #include "MoveDown.hpp"
 #include "MoveUp.hpp"
 #include "MoveStop.hpp"
-
-#include <WProgram.h>
+#include "ShutterClockTimer.hpp"
+#include "HardwareSerial.h"
+//#include <WProgram.h>
 
 // There must be one global SimpleTimer object.
 // More SimpleTimer objects can be created and run,
@@ -45,14 +48,14 @@ MoveDown moveDown(mgr);
 MoveUp moveUp(mgr);
 MoveStop MoveStop(mgr);
 
-RotaryEncoder rotaryEncoder(11,12);
-RepeatCmd repeatCommand(rotaryEncoder);
 Debouncer debUp(moveUp,8);
 Debouncer debStop(moveDown,9);
 Debouncer debDown(MoveStop,10);
 
+
+
 static const uint8_t line_count = 10;
-const shutter::LineSegment lines[line_count] = {
+const LineSegment lines[line_count] = {
 		{true,    0,  19, 0.000,  228.000 },
 		{true,   20, 149,-1.753 , 261.600 },
 		{true,  150, 184, 0.000,    0.000 },
@@ -65,15 +68,16 @@ const shutter::LineSegment lines[line_count] = {
 		{false, 358, 364, 1.436, -514.000 },
 };
 
-shutter::RollerShutterTimes shutter_times( lines,
+RollerShutterTimes shutter_times( lines,
 								  line_count,
 								  263,
 								  990,
-								  30,
-								  30
+								  0,
+								  20
 		);
 
-
+DS1307 rtc;
+ShutterClockTimer clockTimer(mgr,rtc,shutter_times);
 
 void loop()
 {
@@ -84,10 +88,8 @@ void setup()
 {
 	Serial.begin(9600);
 
-	pinMode (11,INPUT);
-	digitalWrite(11, HIGH);       // turn on pullup resistor
-	pinMode (12,INPUT);
-	digitalWrite(12, HIGH);       // turn on pullup resistor
+	pinMode (11,OUTPUT);
+	pinMode (12,OUTPUT);
 
 	pinMode(8, INPUT);    // Set the switch pin as input
 	pinMode(9, INPUT);    // Set the switch pin as input
@@ -97,11 +99,11 @@ void setup()
     // Pin 13 has an LED connected on most Arduino boards
     pinMode(13, OUTPUT);
 
-    timer.setInterval(5000, &repeatCommand);
-    timer.setInterval(1, &rotaryEncoder);
+
     timer.setInterval(10,&debDown);
     timer.setInterval(10,&debUp);
     timer.setInterval(10,&debStop);
+    timer.setInterval(10000,&clockTimer);
     mgr.moveUp();
 }
 

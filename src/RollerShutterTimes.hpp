@@ -27,8 +27,6 @@
 #define ROLLERSHUTTERTIMES_HPP_
 #include <stdint.h>
 
-namespace shutter {
-
 struct LineSegment  {
 	/** @brief is sunrise or sunset */
 	bool sunrise;
@@ -112,6 +110,5 @@ private:
 	const uint8_t m_sunsetOffset;
 };
 
-}
 
 #endif /* ROLLERSHUTTERTIMES_HPP_ */
