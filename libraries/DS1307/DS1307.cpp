@@ -3,12 +3,25 @@ extern "C" {
 }
 #include "DS1307.h"
 
+
 DS1307::DS1307()
 {
+  days_in_month[0] = 31;
+  days_in_month[1] = 28;
+  days_in_month[2] = 31;
+  days_in_month[3] = 30;
+  days_in_month[4] = 31;
+  days_in_month[5] = 30;
+  days_in_month[6] = 31;
+  days_in_month[7] = 31;
+  days_in_month[8] = 30;
+  days_in_month[9] = 31;
+  days_in_month[10] = 30;
+  days_in_month[11] = 31; 
   Wire.begin();
 }
 
-DS1307 RTC=DS1307();
+//DS1307 RTC=DS1307();
 
 // PRIVATE FUNCTIONS
 
@@ -161,4 +174,11 @@ void DS1307::start(void)
   save();
 }
 
+unsigned char DS1307::get_days_in_month(unsigned int month)
+{
+	unsigned char index = month;
+	if(sizeof(days_in_month)-1 < index )
+		index = 0;
 
+	return days_in_month[index];
+}

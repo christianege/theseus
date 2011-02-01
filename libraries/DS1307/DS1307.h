@@ -20,6 +20,7 @@
 #define DS1307_MTH 5
 #define DS1307_YR 6
 
+
 #define DS1307_BASE_YR 2000
 
 #define DS1307_CTRL_ID B1101000  //DS1307
@@ -49,12 +50,13 @@ class DS1307
 	void set(int, int);
     void start(void);
     void stop(void);
-
+    unsigned char get_days_in_month(unsigned int month);
   // library-accessible "private" interface
   private:
     byte rtc_bcd[7]; // used prior to read/set ds1307 registers;
-	void read(void);
-	void save(void);
+    void read(void);
+    void save(void);
+    unsigned char days_in_month[12]; 
 };
 
 extern DS1307 RTC;
