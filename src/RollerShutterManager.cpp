@@ -104,7 +104,7 @@ void RollerShutterManager::process(ShutterEvent e)
 			action_stop_move_up();
 			break;
 		case STOP_DOWN_ACTION:
-			action_move_up();
+			action_stop_move_down();
 			break;
 		case NIL_ACTION:
 		default:

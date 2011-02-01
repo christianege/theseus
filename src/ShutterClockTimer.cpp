@@ -46,6 +46,17 @@ void ShutterClockTimer::execute()
 	int day = m_rtc.get(DS1307_DATE,true);
 	int hour = m_rtc.get(DS1307_HR,false);
 	int minute = m_rtc.get(DS1307_MIN,false);
+	int month = m_rtc.get(DS1307_MTH,false);
+
+	if(1 != month)
+	{
+		int i = 0; 
+		do
+		{
+			day +=  m_rtc.get_days_in_month(i);
+			i++;
+		} while (i < month - 2 );
+	}
 	const uint16_t current = (hour * 60) + minute;
 
 	uint16_t down_offset = 0;
