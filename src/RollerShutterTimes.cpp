@@ -32,8 +32,8 @@ RollerShutterTimes::RollerShutterTimes(const LineSegment *lines,
 			uint8_t lineCount,
 			uint16_t minSunrise,
 			uint16_t minSunset,
-			uint8_t sunriseOffset,
-			uint8_t sunsetOffset
+			int8_t sunriseOffset,
+			int8_t sunsetOffset
 			)
 :mpe_lines(lines),
  m_lineCount(lineCount),

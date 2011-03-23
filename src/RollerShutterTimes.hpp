@@ -68,8 +68,8 @@ public:
 			uint8_t lineCount,
 			uint16_t minSunrise,
 			uint16_t minSunset,
-			uint8_t sunriseOffset,
-			uint8_t sunsetOffset
+			int8_t sunriseOffset,
+			int8_t sunsetOffset
 			);
 
 	/**
