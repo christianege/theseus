@@ -106,8 +106,8 @@ private:
 	const uint8_t m_lineCount;
 	const uint16_t m_minSunrise;
 	const uint16_t m_minSunset;
-	const uint8_t m_sunriseOffset;
-	const uint8_t m_sunsetOffset;
+	const int8_t m_sunriseOffset;
+	const int8_t m_sunsetOffset;
 };
 
 

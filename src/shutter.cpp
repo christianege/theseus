@@ -72,8 +72,8 @@ RollerShutterTimes shutter_times( lines,
 								  line_count,
 								  263,
 								  990,
-								  -60,
-								  60
+								  -20,
+								  80
 		);
 
 DS1307 rtc;

@@ -47,7 +47,7 @@ void ShutterClockTimer::execute()
 	int hour = m_rtc.get(DS1307_HR,false);
 	int minute = m_rtc.get(DS1307_MIN,false);
 	int month = m_rtc.get(DS1307_MTH,false);
-
+	
 	if(1 != month)
 	{
 		int i = 0; 
@@ -55,7 +55,7 @@ void ShutterClockTimer::execute()
 		{
 			day +=  m_rtc.get_days_in_month(i);
 			i++;
-		} while (i < month - 2 );
+		} while (i < month - 1 );
 	}
 	const uint16_t current = (hour * 60) + minute;
 
@@ -81,4 +81,6 @@ void ShutterClockTimer::execute()
 	Serial.print(up_offset);
 	Serial.print(" day: ");
 	Serial.println(day);
+	Serial.print(" month: ");
+	Serial.println(month);
 }
